@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<board>
+	<about title="公司简介:">
+		<id></id>
+		<value>承接企业策划、广告、企业宣传类（VI、画册等）平面设计、网站建设、地产形象包装、企业公关活动策划</value>
+		<value>服务于一汽轿车、一汽大众、一汽富维、久正热处理公司、恒大地产和大禹地产高端楼盘.</value>
+	</about>
+	<contact title="联系方式:">
+		<item><id>电话:</id><value>13578916657</value><value>13304338901</value></item>
+		<item><id>地址:</id><value>长春</value></item>
+		<item><id>邮编:</id><value>130000</value></item>	
+	</contact>
+	<picture>
+		<pic text="">images/test.jpg</pic>
+		<pic text="">images/1.jpg</pic>
+		<pic text="">images/2.jpg</pic>
+		<pic text="">images/3.jpg</pic>
+		<pic text="">images/4.jpg</pic>
+		<pic text="">images/5.jpg</pic>
+		<pic text="">images/6.jpg</pic>
+		<pic text="">images/7.jpg</pic>
+		<pic text="">images/8.jpg</pic>
+		<pic text="">images/9.jpg</pic>
+		<pic text="">images/10.jpg</pic>
+		<pic text="">images/11.jpg</pic>
+		<pic text="">images/12.jpg</pic>
+		<pic text="">images/13.jpg</pic>
+		<pic text="">images/14.jpg</pic>
+		<pic text="">images/15.jpg</pic>
+		<pic text="">images/16.jpg</pic>
+		<pic text="">images/17.jpg</pic>
+		<pic text="">images/18.jpg</pic>
+		<pic text="">images/19.jpg</pic>
+		<pic text="">images/20.jpg</pic>
+		<pic text="">images/21.jpg</pic>
+		<pic text="">images/22.jpg</pic>
+		<pic text="">images/23.jpg</pic>
+		<pic text="">images/24.jpg</pic>
+	</picture>
+</board>
+

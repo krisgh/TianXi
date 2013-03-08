@@ -1,0 +1,15 @@
+<html>
+<head><title>PIC object Test</title></head>
+<script type="text/javascript" src="pics.js"></script>
+<input type="button" onclick="tmppic._fadeout_(document.getElementById('show'))" value="out"></input>
+<input type="button" onclick="tmppic._fadein_(document.getElementById('show'))" value="in"></input>
+<body>
+	<p id="show"></p>
+</body>
+<script type="text/javascript" >
+	var tmppic=new PICS();
+	tmppic.fill_image("0","show");
+	tmppic.btn_bar();
+	document.getElementById("show").appendChild(tmppic.btn_bar());
+</script>
+</html>

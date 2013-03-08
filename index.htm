@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<style type="text/css">
+div {
+color:#2C2C2C;
+margin:auto;
+text-align:center;
+border-bottom:1px solid;
+width:600px;
+background:#222222;
+display:block;
+}
+div#bcl {
+width:800px;
+height:600px;
+border-bottom:0px;
+background:#383838 url("images/pattern.png");
+position:relative;
+}
+div#main {
+position:relative;
+display:block;
+}
+div#logobg{
+height:55px;
+opacity:0.5;
+left:100px;
+z-index:10;
+}
+div#logo {
+height:55px;
+line-height:55px;
+background:none;
+position:absolute;
+z-index:20;
+left:100px;
+top:0px;
+}
+div#logo img{
+border:0px;
+margin-top:20px;
+}
+div#menubg{
+height:30px;
+line-height:30px;
+float:center;
+position:absolute;
+opacity:0.5;
+border-bottom:0px;
+z-index:10;
+}
+div#menu {
+height:30px;
+line-height:30px;
+overflow:hidden;
+float:center;
+position:absolute;
+border-bottom:0px;
+z-index:20;
+background:none;
+color:#727272;
+}
+div#menu a{
+text-decoration:none;
+color:#FFFFFF;
+padding:0 65px;
+}
+a:hover{
+color:#FFFFFF;
+}
+div#credit {
+font-size:xx-small;
+border-bottom:0px;
+height:45px;
+color:#727272;
+opacity:0.5;
+}
+div#showpos{
+border:0;
+height:500px;
+display:table-cell;
+vertical-align:middle;
+}
+div#show{
+border:0;
+margin:0 auto;
+}
+div#linkbg{
+height:50px;
+background:none;
+bottom:0px;
+border:0px;
+float:center;
+position:absolute;
+display:block;
+overflow:hidden;
+}
+ul#link{
+border:0;
+bottom:0px;
+padding-left:0px;
+margin:0 auto;
+white-space:nowrap;
+position:absolute;
+}
+ul#link li{
+list-style:none;
+display:inline;
+}
+ul#link li>img{
+height:40px;
+width:40px;
+border:2px solid;
+margin:2px;
+cursor:pointer;
+opacity:0.5;
+}
+div#navgt{
+height:100%;
+border:0px;
+background:none;
+}
+#prev,#next{
+position:absolute;
+background:transparent url("images/nav.png") no-repeat 0% 50%;	
+height:100%;
+width:12px;
+cursor:pointer;
+}
+#prev{
+left:0px;
+}
+#next{
+right:0px;
+background-position:110%
+}
+div#cabout,div#ccontact,div#info{
+background-image:url('images/content-bg.png');
+height:500px;
+position:absolute;
+top:0px;
+border:0px;
+background-color:#000000;
+color:#FFFFFF;
+text-align:left;
+visibility:hidden;
+}
+div#intext{
+text-align: left;
+color: white;
+background: none;
+border: 0px;
+padding: 30px;
+width: 500px;
+}
+</style>
+<TITLE>天玺广告</TITLE>
+<script type="text/javascript" src="jquery-1.7.2.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+</HEAD>
+<BODY bgcolor="#222222">
+<div id="bcl">
+	<div id="logobg"></div>
+	<div id="logo"><a href="index.htm"><img src="images/logo1.png"/></a></div>
+	<div>
+		<div id="menubg"></div>
+		<div id="menu"><a id="about" href="#">关于我们</a>|<a id="design" href="#">作品展示</a>|<a id="contact" href="#">联系我们</a></div>
+	</div>
+	<div id="main" show-content="design">
+		<div id="showpos"><div id="show"></div></div>
+		<div id="linkbg">
+			<ul id="link"></ul>
+			<div id="navgt">
+				<span id="prev">&nbsp;&nbsp;&nbsp;</span>
+				<span id="next">&nbsp;&nbsp;&nbsp;</span>
+			</div>
+		</div>
+		<div id="info"></div>
+	</div>
+	<div id="credit">Copyright &#169; 2012 长春天玺广告有限公司</div>
+</div>
+</BODY>
+<script type="text/javascript" src="showpic.js"></script>
+</HTML>
