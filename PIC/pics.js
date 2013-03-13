@@ -59,7 +59,13 @@ PICS.prototype.fill_image=function(index_img,contaner){
 	var pics=this;
 	var img_t_cache,img_s_cache;
 	var objcont=document.getElementById(contaner);
+	
 	objcont.style.zoom=1;
+
+	img_t_cache=this.pic_que[index].t||"";
+	img_s_cache=this.pic_que[index].s||"";
+	_fadeout_(objcont,effect_chain,this);
+
 	org_img.onload=function (){
 		var ua=navigator.userAgent
 		if(ua.match(/(IE|MSIE)/i)){
@@ -67,6 +73,7 @@ PICS.prototype.fill_image=function(index_img,contaner){
 				fill_img.src=org_img.src;
 				pics._workspace.style.background="url("+org_img.src+") no-repeat center center";
 				objcont.appendChild(pics._workspace);
+				_fadein_(objcont);
 			}
 		}
 		else{
@@ -74,17 +81,14 @@ PICS.prototype.fill_image=function(index_img,contaner){
 				fill_img.src=org_img.src;
 				pics._workspace.style.background="url("+org_img.src+") no-repeat center center";
 				objcont.appendChild(pics._workspace);
-				}
+				_fadein_(objcont);
+			}
 		}
 	}
 
-	img_t_cache=this.pic_que[index].t||"";
-	img_s_cache=this.pic_que[index].s||"";
-	_fadeout_(objcont,effect_chain,this);
 	function effect_chain(fade_obj,callback_obj){
 		org_img.title=img_t_cache;
 		org_img.src=img_s_cache;
-		_fadein_(fade_obj);
 	}
 };
 
