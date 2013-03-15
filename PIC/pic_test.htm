@@ -1,17 +1,15 @@
 <html>
 <head><title>PIC object Test</title>
+<link rel="stylesheet" type="text/css" href="pics.css">
 <script type="text/javascript" src="pics.js"></script>
-<input type="button" onclick="tmppic._fadein_(document.getElementById('show'))" value="out"></input>
-<input type="button" onclick="tmppic._fadein_(document.getElementById('show'))" value="in"></input>
-
 </head>
 <body>
-	<p id="show"></p>
+	<div id="show"></div>
 </body>
 <script type="text/javascript" >
 	var tmppic=new PICS();
-	tmppic.fill_image(0,"show");
+	//tmppic.fill_image(0,"show");
+	tmppic.initialize("imglist.xml","show",1024,685)
 	document.getElementById("show").appendChild(tmppic.btn_bar(tmppic));
-	//setTimeout("tmppic.fill_image(1,'show')",500);
 </script>
 </html>
