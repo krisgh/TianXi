@@ -1,9 +1,13 @@
 <html>
 <head><title>PIC object Test</title>
 <link rel="stylesheet" type="text/css" href="pics.css">
+<link rel="stylesheet" type="text/css" href="mskm.css">
+<script type="text/javascript" src="promise.js"></script>
 <script type="text/javascript" src="pics.js"></script>
+<script type="text/javascript" src="mskm.js"></script>
 </head>
 <body>
+	<div><a href="#" id="menu">M</a></div>
 	<div id="show"></div>
 </body>
 <script type="text/javascript" >
@@ -11,5 +15,9 @@
 	//tmppic.fill_image(0,"show");
 	tmppic.initialize("imglist.xml","show",1024,685)
 	document.getElementById("show").appendChild(tmppic.btn_bar(tmppic));
+	var objm=document.getElementById("menu");
+	objm.onmouseover=function(){
+		openmaskmenu(document.body);
+	}
 </script>
 </html>

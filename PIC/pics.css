@@ -47,3 +47,43 @@ li a{
 li a:hover{
 	background-image:url(images/choose.png);
 }
+a#menu{
+	position:absolute;
+	left:50%;
+	text-decoration:none;
+	display:block;
+	background:#F0EC00;
+	opacity:50%;
+	zoom:1;
+	filter:Alpha(opacity=50);
+	-moz-boder-radius:0 0 30px 30px;
+	-webkit-border-radius:0 0 30px 30px;
+	border-radius:0 0 30px 30px;
+	height:10px;
+	width:60px;
+	box-shadow:0 0 10px 5px #F0EC00;
+	color:#ffffff;
+	text-align:center;
+	text-shadow:0 0 3px #295124;
+	font-size:10px;
+	z-index:99;
+}
+@-webkit-keyframes breath{
+	from{
+		background-color:#F0EC00;
+		box-shadow:0 0 10px 5px #F0EC00;
+	}
+	50%{
+		background-color:#F0EC00;
+		box-shadow:0 0 10px 10px #F0EC00;
+	}
+	to{
+		background-color:#F0EC00;
+		box-shadow:0 0 10px 5px #F0EC00;
+	}		
+}
+a#menu{
+	-webkit-animation-name:breath;
+	-webkit-animation-duration:3s;
+	-webkit-animation-iteration-count:infinite;
+}

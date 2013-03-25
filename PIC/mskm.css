@@ -1,0 +1,26 @@
+div#mskbg{
+	opacity:0.5;
+	zoom:1;
+	filter:Alpha(opacity=50);
+	background-color:#708F87;
+	position:absolute;
+	width:100%;
+	height:100%;
+	z-index:999;
+	top:0;
+}
+div#mskmu{
+	background-color:#708F12;
+	position:absolute;
+	width:70%;
+	height:70%;
+	z-index:1000;
+	left:15%;
+	top:-200px;
+}
+a#moveout{
+	position:absolute;
+	right:10px;
+	top:10px;
+	z-index:1000;
+}
