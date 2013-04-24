@@ -12,15 +12,22 @@ div#mskbg{
 div#mskmu{
 	background-color:#708F12;
 	position:absolute;
-	width:70%;
-	height:70%;
+	width:800px;
+	height:600px;
 	z-index:1000;
 	left:15%;
-	top:-200px;
+	top:-300px;
 }
 a#moveout{
 	position:absolute;
 	right:10px;
 	top:10px;
 	z-index:1000;
+}
+a#menua{
+	display:block;
+	background-repeat:no-repeat;
+	background-position:center;
+	position:absolute;
+	left:0px;
 }

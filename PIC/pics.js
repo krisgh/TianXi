@@ -57,10 +57,6 @@ PICS.prototype.fill_image=function(index_img,contaner){
 	var pics=this;
 	var img_t_cache,img_s_cache;
 	var objcont=this._workspace;//document.getElementById(contaner);
-	//contaner style
-	//objcont.style.zoom="1";
-	//objcont.style.width="100%";
-	//objcont.style.height="100%"
 	var promise=new Promise();
 	img_t_cache=this.pic_que[index].t||"";
 	img_s_cache=this.pic_que[index].s||"";
@@ -68,6 +64,7 @@ PICS.prototype.fill_image=function(index_img,contaner){
 
 	org_img.onload=function (){
 		var ua=navigator.userAgent
+		var prms=new Promise();
 		if(ua.match(/(IE|MSIE)/i)){
 			if(org_img.readyState){
 				pics._workspace.style.backgroundImage="url("+org_img.src+")";
@@ -84,14 +81,12 @@ PICS.prototype.fill_image=function(index_img,contaner){
 		}
 	}
 
-	function effect_chain(fade_obj){//,callback_obj){
-		var prms=new Promise();
+	function effect_chain(){//,callback_obj){
 		org_img.title=img_t_cache;
 		org_img.src=img_s_cache;
-		prms.relove;
-		return prms;
 	}
-	_fadeout_(objcont).then(effect_chain).then(_fadein_);
+
+	_fadeout_(objcont).then(effect_chain);
 };
 
 //button bar

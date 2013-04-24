@@ -1,0 +1,87 @@
+<html>
+	<head>
+		<title>topline test</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<script type="text/javascript" src="topline.js"></script>
+        <style>
+            img{
+                position:absolute;
+            }
+            div#container{
+                background-color:#7F7F7F;
+                border-color:#000000;
+                border-style:solid;
+                border-width:5px;
+                width:1024px;
+                height:768px;
+                position:absolute;
+            }
+        </style>
+	</head>
+<body>
+	<div id="container"></div>
+	<script>
+function topline(){
+    var img=new Image();
+    tp.outP();
+    for(var i=0; i<tp.result.length; i++){
+        img=tp.result[i].p;
+        img.style.left=tp.result[i].x1;
+        img.style.top=tp.result[i].y1;
+        document.getElementById("container").appendChild(img.cloneNode(true));
+    }
+    console.debug(tp.result);
+    console.debug(tp.tS);
+}
+		
+function xmlHandle(xmlfile, result){
+	var xmlhttp,xmldoc;
+	var root_node,pare_node,root_node_len;
+	var pic_que_index=0;
+
+	if(xmlfile){
+		if(window.XMLHttpRequest){
+			xmlhttp=new XMLHttpRequest();
+		}
+		else{
+			xmlhttp=new ActiveObject("Microsoft.XMLHTTP");
+		}
+		xmlhttp.open("GET",xmlfile,false);
+		xmlhttp.send(null);
+		xmldoc=xmlhttp.responseXML;
+
+		root_node=xmldoc.getElementsByTagName("Menus")[0];
+		root_node_len=root_node.childNodes.length;
+		for(var i=0;i<root_node_len;i++){
+			pare_node=root_node.childNodes[i];
+			if(pare_node.nodeType!=3){
+				result[pic_que_index++]={
+					title:pare_node.getElementsByTagName("Title")[0].firstChild.nodeValue||"",
+					pic:pare_node.getElementsByTagName("Picture")[0].firstChild.nodeValue||"",
+					src:pare_node.getElementsByTagName("Source")[0].firstChild.nodeValue||""
+				}
+			}			
+		}
+	}
+}
+
+var menu=[];
+//var pics=[]
+var tp=new tl(null,[0,0,1024,768]);
+var imgs=[];
+xmlHandle("menulist.xml",menu);
+for (var i=0 ; i<menu.length ; i++) {
+    var img=new Image();
+    imgs.push(img.cloneNode(true));
+    imgs[i].onload=function(event){
+        var e=event || window.event;
+        tp.inP(e.srcElement || e.target);
+        if (tp.pS.length==menu.length){
+            topline();
+        }
+    }
+    imgs[i].src=menu[i].pic;
+}
+	</script>
+</body>
+</html>
