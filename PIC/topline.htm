@@ -15,6 +15,7 @@
                 width:1024px;
                 height:768px;
                 position:absolute;
+                overflow:auto;
             }
         </style>
 	</head>
@@ -67,7 +68,7 @@ function xmlHandle(xmlfile, result){
 
 var menu=[];
 //var pics=[]
-var tp=new tl(null,[0,0,1024,768]);
+var tp=new tl(null,[0,0,1024,768],5);
 var imgs=[];
 xmlHandle("menulist.xml",menu);
 for (var i=0 ; i<menu.length ; i++) {

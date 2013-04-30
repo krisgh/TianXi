@@ -1,11 +1,50 @@
 (function(winnav){
-this.openmaskmenu=function(container){
-	var mb=createNewMaskBg();
-	//var mn=createNewMenu();
+//imgMenu object
+var imgMenu=function(){
+        this.pic=document.createElement("img");
+        this.href;
+        this.title;
+        this.width;
+        this.height;
+};
+
+imgMenu.prototype={
+    imga:function(id){
+        if(this.pic instanceof HTMLImageElement){ 
+            var imgblock=document.createElement("a");
+            imgblock.id=id;
+            imgblock.href=this.href;
+            imgblock.title=this.title;
+            imgblock.target="_blank";
+            imgblock.appendChild(this.pic.cloneNode(true));
+            return imgblock;
+        }
+        else{
+            return false;
+        }
+    },
+    src:function(path){
+        this.pic.src=path;
+    },
+    onload:function(func){
+        var parent=this;
+        this.pic.onload=function(){
+            parent.width=this.width;
+            parent.height=this.height;
+            //console.debug(this);
+            //console.debug(parent);
+            return func.call(null,this);
+        }
+    }
+};
+
+
+this.openMaskImgMenu=function(container){
+	//mask layer
 	var pare=document.createElement("div");
 	pare.id="maskmenu";
 	container.appendChild(pare);
-
+    //close button
 	var closeBtnId="moveout";
 	var closeBtn=document.createElement("a");
 	closeBtn.id=closeBtnId;
@@ -15,7 +54,10 @@ this.openmaskmenu=function(container){
 		container.removeChild(pare);
 	}
 	pare.appendChild(closeBtn);
+    //mask layer background
+    var mb=createNewMaskBg();
 	pare.appendChild(mb);
+    //images menu
 	var newMenuId="mskmu";
 	var newMenu=document.createElement("div");
 	newMenu.id=newMenuId;
@@ -32,41 +74,47 @@ function createNewMaskBg(){
 }
 
 function createNewMenu(newMenu){
-	//var newMenuId="mskmu";
-	//var newMenu=document.createElement("div");
 	var menu=[];
-	var newAId="menua";
-	var newA;
-	var newimg=document.createElement("img");
-	var newAs=[];
-	var dim;
-	//newMenu.id=newMenuId;
+    var newAId="menua",newA=document.createElement("a"),newAs=[];
+	//var newimg=document.createElement("img"),newimgs=[];
+    
 	xmlHandle("menulist.xml",menu);
+    
 	var objprms=new Promise();
-	//topline test;
-	var startline=[0,0,800,0];
-	var tp=new tl(null,startline); 
-	
-	for(var i=0; i<menu.length;i++){
-		newA="";
-		newA=document.createElement("a");
-		newA.appendChild(newimg.cloneNode(true));
-		newAs.push(newA.cloneNode(true));
-		var a=0;
-		newAs[i].firstChild.onload=function(event){
-			var event=event || windows.event;
-			tp.inP(event.srcElement); //topline test;
-			objprms.then(menuApd(event,newMenu));
-			objprms.resolve();
+    
+	//topline 
+	var startline=[0,0,800,600];
+	var tp=new tl(null,startline,5); 
+    
+	/*for(var i=0; i<menu.length;i++){
+        newimgs.push(newimg.cloneNode(true));
+		newimgs[i].onload=function(event,i){
+			var event=event || window.event;
+            var img=event.srcElement||event.target;
+			return imgLoad(img);
 		};
-		newAs[i].firstChild.src=menu[i].pic;
-		newAs[i].id=newAId;
-		newAs[i].href=menu[i].src;
-		newAs[i].title=menu[i].title;
-		newAs[i].target="_blank";
-	}
-	tp.outP();
-	//return newMenu;
+        newimgs[i].src=menu[i].pic;
+	}*/
+    //fill images with coordinate
+	//var coodnit=tp.outP();
+    
+    //new imgMenu obj test
+    var objims=[];
+    for(var i=0; i<menu.length;i++){
+        var objim=new imgMenu();
+        objims.push(objim);
+		objims[i].onload(imgLoad);
+        objims[i].src(menu[i].pic);
+    }
+    
+    function imgLoad(im){
+        console.debug(this);
+        console.debug(im);
+        tp.inP(im); //topline
+        //newA.href=menu[i].src;
+        //newA.title=menu[i].title;
+        //newAs.push(newA.cloneNode(true));
+    }
 }
 
 function menuApd (event,newMenu){
