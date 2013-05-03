@@ -17,6 +17,7 @@ div#mskmu{
 	z-index:1000;
 	left:15%;
 	top:-300px;
+    overflow:auto;
 }
 a#moveout{
 	position:absolute;

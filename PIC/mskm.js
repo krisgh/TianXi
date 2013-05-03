@@ -1,6 +1,6 @@
 (function(winnav){
 //imgMenu object
-var imgMenu=function(){
+this.imgMenu=function(){
         this.pic=document.createElement("img");
         this.href;
         this.title;
@@ -31,9 +31,7 @@ imgMenu.prototype={
         this.pic.onload=function(){
             parent.width=this.width;
             parent.height=this.height;
-            //console.debug(this);
-            //console.debug(parent);
-            return func.call(null,this);
+            return func.call(null,parent);
         }
     }
 };
@@ -76,14 +74,13 @@ function createNewMaskBg(){
 function createNewMenu(newMenu){
 	var menu=[];
     var newAId="menua",newA=document.createElement("a"),newAs=[];
-	//var newimg=document.createElement("img"),newimgs=[];
-    
-	xmlHandle("menulist.xml",menu);
+
+    xmlHandle("menulist.xml",menu);
     
 	var objprms=new Promise();
     
 	//topline 
-	var startline=[0,0,800,600];
+	var startline=[5,5,800,600];
 	var tp=new tl(null,startline,5); 
     
 	/*for(var i=0; i<menu.length;i++){
@@ -105,15 +102,23 @@ function createNewMenu(newMenu){
         objims.push(objim);
 		objims[i].onload(imgLoad);
         objims[i].src(menu[i].pic);
+        objims[i].title=menu[i].title;
+        objims[i].href=menu[i].src;
     }
     
     function imgLoad(im){
         console.debug(this);
         console.debug(im);
         tp.inP(im); //topline
-        //newA.href=menu[i].src;
-        //newA.title=menu[i].title;
-        //newAs.push(newA.cloneNode(true));
+        if(tp.len()==menu.length){
+            var coodnit=tp.outP();
+            for (var i in coodnit){
+                var co=coodnit[i].p.imga("menua");
+                co.style.left=coodnit[i].x1;
+                co.style.top=coodnit[i].y1;
+                newMenu.appendChild(co);
+            }
+        }
     }
 }
 

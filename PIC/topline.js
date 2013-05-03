@@ -160,46 +160,51 @@ tl.prototype={
 
 	},
 	//inP from workspace
-	inP:function(pic){
-		if (typeof(pic)!=Object){
+	inP:function(objOri){
+		if (typeof(objOri)!="object"){
 			return 0;
 		}
 		else{
-            if(!pic.width || !pic.height || pic.width==0 || pic.height==0){
+            if(!objOri.width || !objOri.height || objOri.width==0 || objOri.height==0){
                 return 0;
             }
-			var tp={ p: this._clone.call(pic),
+			var tp={ p: this._clone(objOri),
 							x1:0,
 							y1:0,
-							x2:pic.width+bSize,
-							y2:pic.height+bSize};
+							x2:objOri.width+bSize,
+							y2:objOri.height+bSize};
 			this.pS.push(tp);
 		}
 		return this;
 	},
     
-    _clone:function(){
+    //object clone
+    _clone:function(objOri){
         var objClone;
-        if (this.ownerDocument.toString()=="[object HTMLDocument]"){
-            return this.cloneNode(true);
+        if (objOri.cloneNode){
+            return objOri.cloneNode(true);
         }
-        if (this.constructor == Object){
-            objClone = new this.constructor(); 
+        if (objOri.constructor == Object){
+            objClone = new objOri.constructor(); 
         }else{
-            objClone = new this.constructor(this.valueOf()); 
+            objClone = new objOri.constructor(objOri.valueOf()); 
         }
-        for(var key in this){
-            if ( objClone[key] != this[key] ){ 
-                if ( typeof(this[key]) == 'object' ){ 
-                    objClone[key] = this[key].Clone();
+        for(var key in objOri){
+            if ( objClone[key] != objOri[key] ){ 
+                if ( typeof(objOri[key]) == 'object' ){ 
+                    objClone[key] = this._clone(objOri[key]);
                 }else{
-                    objClone[key] = this[key];
+                    objClone[key] = objOri[key];
                 }
             }
         }
-        objClone.toString = this.toString;
-        objClone.valueOf = this.valueOf;
+        objClone.toString = objOri.toString;
+        objClone.valueOf = objOri.valueOf;
         return objClone; 
-    } 
+    },
+    
+    len:function(){
+        return this.pS.length;
+    }
 };			
 })(this);
