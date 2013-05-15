@@ -1,4 +1,4 @@
-//tl 对象是根据矩形排样最低水平线搜索算法， 改正最高水平线算法
+//Tl 对象是根据矩形排样最低水平线搜索算法， 改正最高水平线算法
 //***多最高水平线提升算法***
 //*****1.举行在区域内查找最高水平线
 //*****2.矩形宽度小于水平线宽度放入矩形
@@ -24,7 +24,7 @@
 //_constructor 内部函数，读取外部获取的图片放置区域的坐标地址
 //
 (function(){
-this.tl=function(ps,startLine,borderSize){
+this.Tl=function(ps,startLine,borderSize){
 	this.tS=[];
 	this.pS=[];
 	this.p;
@@ -33,16 +33,15 @@ this.tl=function(ps,startLine,borderSize){
     this.bSize;
 	this._const( startLine,borderSize);
 };
-tl.prototype={
+Tl.prototype={
 	//get this.p to put to this.t
-	outP:function(){
+	outP:function(callback){
 		var pLoop=this.pS.length;
 		while(this.pS.length!=0){
             this.t=this.tS.shift();
             this.p=this.pS.shift(); pLoop--; 
             if( this.p.x2-this.p.x1<=this.t.x2-this.t.x1 ){
-                this._putP();
-                tLoop=this.tS.length;
+                this._putP(callback);
                 pLoop=this.pS.length;
             }
             else {
@@ -55,7 +54,7 @@ tl.prototype={
                         console.debug("Removal:"+this.p.p+" dimentions out of range.");
                         continue;
                     };
-                    this.outP();
+                    this.outP(callback);
                 }
                 else {
                     this.tS.splice(0,0,this.t);
@@ -65,13 +64,16 @@ tl.prototype={
 		return this.result;
 	},
 	//position pi and update tS
-	_putP:function(){
+	_putP:function(callback){
 		var pi={ p: this.p.p,
 			x1:this.p.x1+this.t.x1,
 			y1:this.p.y1+this.t.y1,
 			x2:this.p.x2+this.t.x1,
 			y2:this.p.y2+this.t.y1};
 		this.result.push( pi) ;
+        if(typeof callback!=="undefined" && typeof callback==="function"){
+            callback.call(this,pi);
+        }
         //input new this.t line
 		//connect two same level line
 		var newLine={x1:pi.x1, y1:pi.y2, x2:pi.x2, y2:pi.y2};
@@ -91,7 +93,6 @@ tl.prototype={
 		this.tS.push(newLine);
 		this._intT(null);
 	},
-
 	//shift hier t
 	_shiftLow:function(){
 		var hiest,lhier,rhier;
@@ -177,7 +178,6 @@ tl.prototype={
 		}
 		return this;
 	},
-    
     //object clone
     _clone:function(objOri){
         var objClone;
@@ -202,7 +202,7 @@ tl.prototype={
         objClone.valueOf = objOri.valueOf;
         return objClone; 
     },
-    
+    //pS length
     len:function(){
         return this.pS.length;
     }

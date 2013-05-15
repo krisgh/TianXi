@@ -1,5 +1,5 @@
 // Picture Class for display effection.
-(function(winnav){
+(function(){
 this.PICS = function (){
 	this.pic_que=[];
 	this._workspace=document.createElement("div");
@@ -50,9 +50,8 @@ PICS.prototype.initialize=function(xml_path,container,width,height){
 };
 
 //Fill image object into div object
-PICS.prototype.fill_image=function(index_img,contaner){
+PICS.prototype.fill_image=function(index_img){
 	var org_img=new Image();
-	//var fill_img=new Image();
 	var index=parseInt(index_img);
 	var pics=this;
 	var img_t_cache,img_s_cache;
@@ -86,7 +85,10 @@ PICS.prototype.fill_image=function(index_img,contaner){
 		org_img.src=img_s_cache;
 	}
 
-	_fadeout_(objcont).then(effect_chain);
+	promise.then(function(){ 
+        return _fadeout_.call(promise,objcont);
+        }).then(effect_chain);
+    promise.resolve();
 };
 
 //button bar
@@ -123,73 +125,6 @@ PICS.prototype.btn_bar=function(Pics){
 		objbar.style.filter="alpha(opacity=50)";
 	};
 	return objbar;
-};
-
-//effective
-function _fadeout_(movobj){//,callback,callback_obj){
-	var opacity_offset,speed,step;
-	var prms=new Promise();
-	speed=6;
-	step=0.03;
-	function decrease(){
-		if(movobj.style.opacity===""){
-			opacity_offset=1;
-		}
-		else{
-			opacity_offset=parseFloat(movobj.style.opacity,10);
-		}
-
-		if((opacity_offset-step)>0.00001){
-			movobj.style.opacity=opacity_offset-step;
-			movobj.style.filter="alpha(opacity="+(opacity_offset-step)*100+")";
-			setTimeout(function(){return decrease();},speed);
-		}
-		else{
-			movobj.style.opacity=0;
-			movobj.style.filter="alpha(opacity=0)";
-			//if(typeof(callback)==="function"){
-				//callback(movobj,callback_obj);
-				prms.resolve();
-			//}
-		}
-	
-	}
-	decrease();
-	return prms;
-};
-
-function _fadein_(movobj){//,callback),callback_obj){
-	var opacity_offset,speed,step;
-	var prms=new Promise();
-	speed=6;
-	step=0.03;
-	function increase(){
-		if(movobj.style.opacity===""){
-			return this.fading
-		}
-		else{
-			opacity_offset=parseFloat(movobj.style.opacity,10);
-		}
-
-		if(opacity_offset<1){
-			movobj.style.opacity=opacity_offset+step;
-			movobj.style.filter="alpha(opacity="+(opacity_offset+step)*100+")";
-			setTimeout(function(){return increase();},speed);
-		}
-		else{
-			movobj.style.opacity=1;
-			movobj.style.filter="alpha(opacity=100)";
-			//if(typeof(callback)==="function"){
-				//callback(movobj,callback_obj);
-				prms.resolve();
-				
-			//}
-		}
-	
-	}
-
-	increase();
-	return prms;
 };
 
 //getElementsByClassName

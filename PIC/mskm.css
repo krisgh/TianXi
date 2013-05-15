@@ -10,13 +10,13 @@ div#mskbg{
 	top:0;
 }
 div#mskmu{
-	background-color:#708F12;
+	/*background-color:#708F12;*/
 	position:absolute;
 	width:800px;
 	height:600px;
 	z-index:1000;
 	left:15%;
-	top:-300px;
+	top:0px;
     overflow:auto;
 }
 a#moveout{
@@ -31,4 +31,5 @@ a#menua{
 	background-position:center;
 	position:absolute;
 	left:0px;
+    border:5px solid #7F7F7F;
 }

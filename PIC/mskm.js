@@ -1,6 +1,6 @@
-(function(winnav){
+(function(){
 //imgMenu object
-this.imgMenu=function(){
+this.ImgMenu=function(){
         this.pic=document.createElement("img");
         this.href;
         this.title;
@@ -8,7 +8,7 @@ this.imgMenu=function(){
         this.height;
 };
 
-imgMenu.prototype={
+ImgMenu.prototype={
     imga:function(id){
         if(this.pic instanceof HTMLImageElement){ 
             var imgblock=document.createElement("a");
@@ -60,7 +60,7 @@ this.openMaskImgMenu=function(container){
 	var newMenu=document.createElement("div");
 	newMenu.id=newMenuId;
 	pare.appendChild(newMenu);
-	downMenu(newMenu);
+	//downMenu(newMenu);
 	createNewMenu(newMenu);
 };
 
@@ -77,81 +77,41 @@ function createNewMenu(newMenu){
 
     xmlHandle("menulist.xml",menu);
     
-	var objprms=new Promise();
-    
+    //promise for fadein
+	var objPrms=new Promise();
+    var prmsLen=0;
 	//topline 
 	var startline=[5,5,800,600];
-	var tp=new tl(null,startline,5); 
+	var tp=new Tl(null,startline,12); 
     
-	/*for(var i=0; i<menu.length;i++){
-        newimgs.push(newimg.cloneNode(true));
-		newimgs[i].onload=function(event,i){
-			var event=event || window.event;
-            var img=event.srcElement||event.target;
-			return imgLoad(img);
-		};
-        newimgs[i].src=menu[i].pic;
-	}*/
-    //fill images with coordinate
-	//var coodnit=tp.outP();
-    
-    //new imgMenu obj test
-    var objims=[];
+    //new ImgMenu obj test
+    var objIms=[];
     for(var i=0; i<menu.length;i++){
-        var objim=new imgMenu();
-        objims.push(objim);
-		objims[i].onload(imgLoad);
-        objims[i].src(menu[i].pic);
-        objims[i].title=menu[i].title;
-        objims[i].href=menu[i].src;
+        var objIm=new ImgMenu();
+        objIms.push(objIm);
+		objIms[i].onload(imgLoad);
+        objIms[i].src(menu[i].pic);
+        objIms[i].title=menu[i].title;
+        objIms[i].href=menu[i].src;
     }
     
     function imgLoad(im){
-        console.debug(this);
-        console.debug(im);
         tp.inP(im); //topline
-        if(tp.len()==menu.length){
-            var coodnit=tp.outP();
-            for (var i in coodnit){
-                var co=coodnit[i].p.imga("menua");
-                co.style.left=coodnit[i].x1;
-                co.style.top=coodnit[i].y1;
-                newMenu.appendChild(co);
-            }
+        if(tp.len()===menu.length){
+            var tpRzl=tp.outP(function(result){
+                var menua=result.p.imga("menua").cloneNode(true);
+                menua.style.opacity=0;
+                menua.style.left=result.x1;
+                menua.style.top=result.y1;
+                newMenu.appendChild(menua);
+                objPrms.then(function(){return _fadein_.call(objPrms,menua);});
+                prmsLen++;
+            });
+        }
+        if(prmsLen===tpRzl.length){
+            objPrms.resolve();
         }
     }
-}
-
-function menuApd (event,newMenu){
-	var oi=event.target||event.srcElement;
-		if(navigator.userAgent.match(/(IE|MSIE)/i)){
-			if(event.srcElement.readystate){
-				newMenu.appendChild(oi.parentElement);
-			}
-		}
-		else{
-			if(oi.complete){	
-				newMenu.appendChild(oi.parentElement);
-			}
-		}
-}
-
-function downMenu(menu){
-	var top=menu.offsetTop;
-	var speed=parseInt((0-top)/10);
-	var interval=20;
-	function downAction(){
-		var top=menu.offsetTop;
-		if(top<0){
-			top=top+speed;
-			menu.style.top=top;
-			setTimeout(function(){ return downAction();},interval);
-		}
-		else{
-			menu.style.top=0;
-		}
-	}
-	downAction();
 }
 
 function xmlHandle(xmlfile, result){

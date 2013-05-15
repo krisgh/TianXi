@@ -24,7 +24,7 @@
 	<script>
 function topline(){
     var img=new Image();
-    tp.outP();
+    tp.outP(function(){console.debug("topline callback!");});
     for(var i=0; i<tp.result.length; i++){
         img=tp.result[i].p;
         img.style.left=tp.result[i].x1;

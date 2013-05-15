@@ -1,0 +1,34 @@
+<html><head><title>one by one</title></head>
+<script type="text/javascript" src="promise.js"></script>
+<script>
+    /*i=0;
+    function cc(){
+        if( i>=$(".aa ul li").length){
+            clearTimeout(uu);
+        }
+        $(".aa ul li").eq(i).fadeOut(1000);
+        i++;
+        var uu=setTimeout(cc,1000);
+    }*/
+function cc(){
+    var promise=new Promise();
+    var lis=Array.prototype.slice.call(document.getElementsByTagName("li"),0);
+    var lisLen=lis.length;
+    for( var i=0; i<lisLen; i++){
+        promise.then(function(){
+            return _fadein_.call(this,lis.shift());
+            });
+    }
+    promise.resolve(lis);
+}
+</script>
+<body>
+<button type="button" onclick="cc()">Click Me!</button>
+<div class="aa">
+    <ul>
+        <li style="opacity:0"><img src="images/images(1).jpg" /></li>
+        <li style="opacity:0"><img src="images/images(2).jpg" /></li>
+        <li style="opacity:0"><img src="images/images(3).jpg" /></li>
+    </ul>
+</div>
+</body></html>
