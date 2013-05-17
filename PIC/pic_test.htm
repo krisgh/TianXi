@@ -1,5 +1,8 @@
 <html>
 <head>
+    <META HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+    <META HTTP-EQUIV="expires" CONTENT="Wed, 26 Feb 1997 08:21:57 GMT">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>PIC object Test</title>
 <link rel="stylesheet" type="text/css" href="pics.css">
@@ -15,12 +18,17 @@
 </body>
 <script type="text/javascript" >
 	var tmppic=new PICS();
-	//tmppic.fill_image(0,"show");
 	tmppic.initialize("imglist.xml","show",1024,685)
 	document.getElementById("show").appendChild(tmppic.btn_bar(tmppic));
 	var objm=document.getElementById("menu");
+    
+    var menu_width=document.body.offsetWidth*0.8;
+    var menu_height=document.body.offsetHeight*0.9;
+    var menu_left=(document.body.offsetWidth-menu_width)/2;
+    var menu_top=0;
 	objm.onmouseover=function(){
-		openMaskImgMenu(document.body);
+        var menu_size; //openMaskImgMenu variable private to public
+		openMaskImgMenu(document.body,menu_left,menu_top,menu_width,menu_height);
 	}
 </script>
 </html>

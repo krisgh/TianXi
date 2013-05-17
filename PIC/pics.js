@@ -68,14 +68,14 @@ PICS.prototype.fill_image=function(index_img){
 			if(org_img.readyState){
 				pics._workspace.style.backgroundImage="url("+org_img.src+")";
 				//objcont.appendChild(pics._workspace);
-				_fadein_(objcont);
+				_fadein_(objcont,200);
 			}
 		}
 		else{
 			if(org_img.complete){
 				pics._workspace.style.backgroundImage="url("+org_img.src+")";
 				//objcont.appendChild(pics._workspace);
-				_fadein_(objcont);
+				_fadein_(objcont,200);
 			}
 		}
 	}
@@ -86,7 +86,7 @@ PICS.prototype.fill_image=function(index_img){
 	}
 
 	promise.then(function(){ 
-        return _fadeout_.call(promise,objcont);
+        return _fadeout_.call(promise,objcont,200);
         }).then(effect_chain);
     promise.resolve();
 };

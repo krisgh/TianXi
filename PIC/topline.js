@@ -51,7 +51,7 @@ Tl.prototype={
                     this.tS.splice(0,0,this.t)
                     if(!this._shiftLow()){
                         this.p=this.pS.shift();
-                        console.debug("Removal:"+this.p.p+" dimentions out of range.");
+                        console.log("Removal:"+this.p.p+" dimentions out of range.");
                         continue;
                     };
                     this.outP(callback);
@@ -97,7 +97,6 @@ Tl.prototype={
 	_shiftLow:function(){
 		var hiest,lhier,rhier;
         if( this.tS.length==1 ){ return false; }
-        console.debug(this.tS);
 		this.tS.sort( function( a,b ){ return a.y2<b.y2?-1:1; });
 		hiest=this.tS.shift();
 		for ( var i in this.tS) {

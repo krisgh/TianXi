@@ -25,12 +25,17 @@ Promise.prototype = {
 ///////EFFECTIVE FUNCTION///////
 
 //Fadeout
-this._fadeout_=function(movobj){//,callback,callback_obj){
+this._fadeout_=function(movobj,time){//,callback,callback_obj){
 	var opacity_offset,speed,step;
-	//var prms=new Promise();
+	//Promise option
     var prms=this;
-	speed=6;
 	step=0.03;
+    if(time){
+        speed=parseInt(time/(1/step)+0.55);
+    }
+    else{
+        speed=20;
+    }
 	function decrease(){
 		if(movobj.style.opacity===""){
 			opacity_offset=1;
@@ -58,12 +63,17 @@ this._fadeout_=function(movobj){//,callback,callback_obj){
 }
 
 //Fadein
-this._fadein_=function(movobj){
+this._fadein_=function(movobj,time){
 	var opacity_offset,speed,step;
-	//var prms=new Promise();
+	//Promise option
     var prms=this;
-	speed=6;
 	step=0.03;
+    if(time){
+        speed=parseInt(time/(1/step)+0.55);
+    }
+    else{
+        speed=20;
+    }
 	function increase(){
 		if(movobj.style.opacity===""){
 			return this.fading
