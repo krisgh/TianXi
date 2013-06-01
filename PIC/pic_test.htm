@@ -18,17 +18,22 @@
 </body>
 <script type="text/javascript" >
 	var tmppic=new PICS();
-	tmppic.initialize("imglist.xml","show",1024,685)
-	document.getElementById("show").appendChild(tmppic.btn_bar(tmppic));
-	var objm=document.getElementById("menu");
+	tmppic.initialize("imglist.xml","show")
+	document.getElementById("show").appendChild(tmppic.btn_bar());
     
+	var objm=document.getElementById("menu");
     var menu_width=document.body.offsetWidth*0.8;
     var menu_height=document.body.offsetHeight*0.9;
     var menu_left=(document.body.offsetWidth-menu_width)/2;
     var menu_top=0;
 	objm.onmouseover=function(){
         var menu_size; //openMaskImgMenu variable private to public
-		openMaskImgMenu(document.body,menu_left,menu_top,menu_width,menu_height);
+		//openMaskImgMenu(document.body,menu_left,menu_top,menu_width,menu_height);
+        openMaskImgMenu(document.body,
+            (document.body.clientWidth-document.body.clientWidth*0.8)/2,
+            0,
+            document.body.clientWidth*0.8,
+            document.body.clientHeight*0.9);
 	}
 </script>
 </html>

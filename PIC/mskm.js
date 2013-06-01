@@ -10,7 +10,8 @@ this.ImgMenu=function(){
 
 ImgMenu.prototype={
     imga:function(id){
-        if(this.pic instanceof HTMLImageElement){ 
+        if(Object.prototype.toString.call(this.pic)==='[object HTMLImageElement]' ||
+            Object.prototype.toString.call(this.pic)==='[object Object]'){ 
             var imgblock=document.createElement("a");
             imgblock.id=id;
             imgblock.href=this.href;
@@ -119,6 +120,7 @@ function createNewMenu(newMenu){
             var tpRzl=tp.outP(function(result){
                 var menua=result.p.imga("menua").cloneNode(true);
                 menua.style.opacity=0;
+                menua.style.filter="Alpha(opacity=0)";
                 menua.style.left=result.x1;
                 menua.style.top=result.y1;
                 newMenu.appendChild(menua);

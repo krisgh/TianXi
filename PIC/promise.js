@@ -2,12 +2,15 @@
 (function(){
 this.Promise = function () {
         this.thens = [];
+        this.status='resolved'; //two status:progress,resolved
 };
 
 Promise.prototype = {
     resolve: function () {
         var t = this.thens.shift(), n;
+        this.status='resolved';
         if(t){
+            this.status='progress';
 			n = t.apply(this, arguments);
 			if(n instanceof Promise){
 				n.thens = this.thens;
@@ -27,6 +30,7 @@ Promise.prototype = {
 //Fadeout
 this._fadeout_=function(movobj,time){//,callback,callback_obj){
 	var opacity_offset,speed,step;
+    clearTimeout(this.varSetTime);
 	//Promise option
     var prms=this;
 	step=0.03;
@@ -42,12 +46,15 @@ this._fadeout_=function(movobj,time){//,callback,callback_obj){
 		}
 		else{
 			opacity_offset=parseFloat(movobj.style.opacity,10);
+            if(opacity_offset=='undefined'){
+                opacity_offset=parseFloat(movobj.style.filter.match(/\d+/))/100;
+            }
 		}
 
 		if((opacity_offset-step)>0.00001){
 			movobj.style.opacity=opacity_offset-step;
 			movobj.style.filter="alpha(opacity="+(opacity_offset-step)*100+")";
-			setTimeout(function(){return decrease();},speed);
+			setTimeout(decrease,speed);
 		}
 		else{
 			movobj.style.opacity=0;
@@ -65,6 +72,7 @@ this._fadeout_=function(movobj,time){//,callback,callback_obj){
 //Fadein
 this._fadein_=function(movobj,time){
 	var opacity_offset,speed,step;
+    clearTimeout(this.varSetTime);
 	//Promise option
     var prms=this;
 	step=0.03;
@@ -79,7 +87,10 @@ this._fadein_=function(movobj,time){
 			return this.fading
 		}
 		else{
-			opacity_offset=parseFloat(movobj.style.opacity,10);
+			opacity_offset=parseFloat(movobj.style.opacity);
+            if(opacity_offset=='undefined'){
+                opacity_offset=parseFloat(movobj.style.filter.match(/\d+/))/100;
+            }
 		}
 
 		if(opacity_offset<1){
@@ -117,4 +128,21 @@ this.downMenu=function(menu){
 	}
 	downAction();
 }
+
+//getElementsByClassName
+//Author:Robert Nyman
+this.getElementsByClassName=function(oElm, strTagName, strClassName){
+	var arrElements = (strTagName == "*" && oElm.all)?oElm.all:oElm.getElementsByTagName(strTagName);
+    var arrReturnElements = new Array();
+    strClassName = strClassName.replace(/\-/g, "\\-");
+    var oRegExp = new RegExp("(^|\\s)" + strClassName + "(\\s|$)");
+    var oElement;
+    for(var i=0; i < arrElements.length; i++){
+        oElement = arrElements[i];
+        if(oRegExp.test(oElement.className)){
+            arrReturnElements.push(oElement);
+        }
+    }
+    return (arrReturnElements)
+};
 })(this);
