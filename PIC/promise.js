@@ -1,5 +1,6 @@
 ///////ASYNCHRONOUS CLASS///////
 (function(){
+this.navAgentIE=!-[1,]; //IE9 below is true, others is false
 this.Promise = function () {
         this.thens = [];
         this.status='resolved'; //two status:progress,resolved

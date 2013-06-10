@@ -3,6 +3,8 @@
 this.PICS = function (){
 	this.pic_que=[];
 	this._workspace=document.createElement("div");
+    this.BOIW;
+    this.BOIH;
 };
 
 //Pic construction
@@ -61,11 +63,23 @@ PICS.prototype.fill_image=function(index_img,prmsPare){
 	img_s_cache=this.pic_que[index].s||"";
 
 	org_img.onload=function (){
-		var ua=navigator.userAgent
+		//var ua=navigator.userAgent;
 		var prms=new Promise();
-		if(ua.match(/(IE|MSIE)/i)){
+        
+        pics.BOIW=org_img.width;
+        pics.BOIH=org_img.height;
+        
+        if(pics._workspace.childElementCount!=0){
+            for( var elm in pics._workspace.children){
+                var t=pics._workspace.children[elm];
+                if(typeof(t)=='object') pics._workspace.removeChild(t);
+            }
+        }
+        
+		if(navAgentIE){
 			if(org_img.readyState){
-				pics._workspace.style.backgroundImage="url("+org_img.src+")";
+                pics._workspace.appendChild(org_img);
+                pics.resize();
                 if(prmsPare instanceof Promise){
                     prmsPare.then(function(){
                         return _fadein_.call(prmsPare,objcont,200);
@@ -81,7 +95,8 @@ PICS.prototype.fill_image=function(index_img,prmsPare){
 		}
 		else{
 			if(org_img.complete){
-				pics._workspace.style.backgroundImage="url("+org_img.src+")";
+                pics._workspace.appendChild(org_img);
+                pics.resize();
 				if(prmsPare instanceof Promise){
                     prmsPare.then(function(){
                         return _fadein_.call(prmsPare,objcont,200);
@@ -153,5 +168,27 @@ PICS.prototype.btn_bar=function(){
 		objbar.style.filter="alpha(opacity=50)";
 	};
 	return objbar;
+};
+
+/*
+* IMAGE SCALE FULL DIV BG SIZE
+* If image edges outrange div bg, no scale,
+* else image edged expand the same size of div bg.
+*/
+PICS.prototype.resize=function(){
+    var bgImg=this._workspace.children[0];
+    var wsw=this._workspace.offsetWidth;
+    var wsh=this._workspace.offsetHeight;
+    var ratiow=wsw/this.BOIW;
+    var ratioh=wsh/this.BOIH;
+    var ratio=this.BOIW/this.BOIH;
+    if(ratiow<ratioh){
+        bgImg.height=wsh;
+        bgImg.width=wsh*(ratio);
+    }
+    else{
+        bgImg.width=wsw;
+        bgImg.height=wsw*(1/ratio);
+    }
 };
 })(this)

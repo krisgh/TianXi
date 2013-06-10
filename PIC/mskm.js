@@ -9,15 +9,28 @@ this.ImgMenu=function(){
 };
 
 ImgMenu.prototype={
-    imga:function(id){
+    pack:function(className){
         if(Object.prototype.toString.call(this.pic)==='[object HTMLImageElement]' ||
             Object.prototype.toString.call(this.pic)==='[object Object]'){ 
-            var imgblock=document.createElement("a");
-            imgblock.id=id;
-            imgblock.href=this.href;
-            imgblock.title=this.title;
-            imgblock.target="_blank";
-            imgblock.appendChild(this.pic.cloneNode(true));
+            var imgblock=document.createElement("div");
+            var imga=document.createElement("a");
+            imgblock.setAttribute('class',className);
+            imgblock.style.position='absolute';
+            imga.setAttribute('class',className+'-i');
+            imga.href=this.href;
+            imga.target="_blank";
+            imga.appendChild(this.pic.cloneNode(true));
+            
+            var imgt=document.createElement('div');
+            imgt.setAttribute('class',className+'-t');
+            imgt.style.display='none';
+            imgt.style.width='100%';
+            var imgf=document.createElement('div');
+            imgf.setAttribute('class',className+'-f');
+            imgf.innerHTML="<span class='"+className+"-tt'>"+this.title+"</span>";
+            imgt.appendChild(imgf.cloneNode(true));
+            imga.appendChild(imgt);
+            imgblock.appendChild(imga.cloneNode(true));
             return imgblock;
         }
         else{
@@ -50,9 +63,9 @@ this.openMaskImgMenu=function(container,msL,msT,msW,msH){
     
     //close button
 	var closeBtnId="moveout";
-	var closeBtn=document.createElement("a");
+	var closeBtn=document.createElement("div");
 	closeBtn.id=closeBtnId;
-	closeBtn.innerHTML="走你";
+	closeBtn.innerHTML="<a class='close'></a>"
 	closeBtn.href="javascript:void(0)";
 	closeBtn.onclick=function(){
 		container.removeChild(pare);
@@ -90,7 +103,6 @@ function createNewMaskBg(){
 
 function createNewMenu(newMenu){
 	var menu=[];
-    var newAId="menua",newA=document.createElement("a"),newAs=[];
 
     xmlHandle("menulist.xml",menu);
     
@@ -99,7 +111,7 @@ function createNewMenu(newMenu){
     var countPrmsEmbed=0;
 	//topline 
 	var startline=[5,5,menu_size.msW-10,menu_size.msH];
-	var tp=new Tl(null,startline,13); 
+	var tp=new Tl(null,startline,14); 
     //new ImgMenu obj test
     var objIms=[];
     for(var i=0; i<menu.length;i++){
@@ -118,24 +130,38 @@ function createNewMenu(newMenu){
         if(tp.len()===menu.length){
             newMenu.innerHTML='';
             var tpRzl=tp.outP(function(result){
-                var menua=result.p.imga("menua").cloneNode(true);
-                menua.style.opacity=0;
-                menua.style.filter="Alpha(opacity=0)";
-                menua.style.left=result.x1;
-                menua.style.top=result.y1;
-                newMenu.appendChild(menua);
+                var menudiv=result.p.pack("icon").cloneNode(true);
+                menudiv.style.opacity=0;
+                menudiv.style.filter="Alpha(opacity=0)";
+                menudiv.style.left=result.x1;
+                menudiv.style.top=result.y1;
+                newMenu.appendChild(menudiv);
                 objPrms.then(function(){
-                    return _fadein_.call(objPrms,menua,100);
+                    return _fadein_.call(objPrms,menudiv,100);
                 });
                 countPrmsEmbed++;
             });
         }
         if(countPrmsEmbed===tpRzl.length){
             objPrms.resolve();
+            addIconsEvent('icon-i');
         }
     }
 }
 
+function addIconsEvent(className){
+    var iconHrefs=document.getElementsByClassName(className);
+    for(var iconHref in iconHrefs){
+        iconHrefs[iconHref].onmouseover=function(){
+            console.log('onmouseover '+this);
+            this.getElementsByClassName('icon-t')[0].style.display='';
+        }
+        iconHrefs[iconHref].onmouseout=function(){
+            console.log('onmouseover '+this);
+            this.getElementsByClassName('icon-t')[0].style.display='none';
+        }
+    }
+}
 function xmlHandle(xmlfile, result){
 	var xmlhttp,xmldoc;
 	var root_node,pare_node,root_node_len;
@@ -159,8 +185,8 @@ function xmlHandle(xmlfile, result){
 			if(pare_node.nodeType!=3){
                 var tmppic=pare_node.getElementsByTagName("Picture")[0].firstChild;
                 if( !tmppic ) continue;
-                var tmptitle=pare_node.getElementsByTagName("Title")[0].firstChild;
-                var tmpsrc=pare_node.getElementsByTagName("Source")[0].firstChild;
+                var tmptitle=pare_node.getElementsByTagName("Title")[0].firstChild||'';
+                var tmpsrc=pare_node.getElementsByTagName("Source")[0].firstChild||'';
 				result[pic_que_index++]={
 					title:tmptitle.nodeValue,
 					pic:tmppic.nodeValue,
